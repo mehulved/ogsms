@@ -2,6 +2,7 @@
 include("wp-blog-header.php");
 
 function query_db($manufacturer, $model) {
+	/* This function will take the manufacturer and model number and return the results after querying the database */
 	global $wpdb;
 	global $table_prefix;
 	$query = "SELECT product_id, post_id, model, offindia_mahamp, offindia_roi, onindia from " . $table_prefix. "og_products where model='$model'";
@@ -10,8 +11,9 @@ function query_db($manufacturer, $model) {
 }
 
 function db_reply($manufacturer, $model) {
-	$result = query_db($manufacturer, $model);
-	$pricearray = get_price($result, $manufacturer);
+	/* Gets the manufacturer name and model number from the received message and returns a reply to be sent to the sender */ 
+	$result = query_db($manufacturer, $model); //first we query the database
+	$pricearray = get_price($result, $manufacturer); //and then filter the results to get the price
 	if ($pricearray != null) {
 		$off_mah_mp = $pricearray["off_mah_mp"];
 		$off_roi = $pricearray["off_roi"];
@@ -45,6 +47,7 @@ function db_reply($manufacturer, $model) {
 }
 
 function get_price($result, $manufacturer) {
+	/* go through the results and return the price of nearest or exact match */
 	if (sizeof($result) > 0) {
 		foreach ($result as $product) {
 			foreach (get_the_category($product->post_id) as $category) {
