@@ -1,0 +1,3 @@
+* Structure of database has changed. To adapt the program to the new structure
+* Adding logic for closest match and returning it
+* Logging of queries and phone numbers. USE SQLite
