@@ -15,10 +15,11 @@ function db_reply($manufacturer, $model) {
 	$result = query_db($manufacturer, $model); //first we query the database
 	$pricearray = get_price($result, $manufacturer); //and then filter the results to get the price
 	if ($pricearray != null) {
+		$model_name = $pricearray["model"];
 		$off_mah_mp = $pricearray["off_mah_mp"];
 		$off_roi = $pricearray["off_roi"];
 		$on_india = $pricearray["on_india"];
-		$reply_std = "Price of $manufacturer $model ";
+		$reply = "Price of $manufacturer $model_name";
 		if ($off_mah_mp!=0) {
 			$reply_off_mah_mp = " for Maharashtra & MP: $off_mah_mp,";
 		}
@@ -38,7 +39,7 @@ function db_reply($manufacturer, $model) {
 			$price_on_india = null;
 		}
 
-		$reply = $reply_off_mah_mp . $reply_off_roi . $reply_on_india;
+		$reply .= $reply_off_mah_mp . $reply_off_roi . $reply_on_india;
 	}
 	else {
 		$reply = "Sorry! The requested device could not be found.";
@@ -51,9 +52,7 @@ function get_price($result, $manufacturer) {
 	if (sizeof($result) > 0) {
 		foreach ($result as $product) {
 			if (strtolower($product->brand) == strtolower($manufacturer)) {
-				$pricearray = array("off_mah_mp" => $product->offline_mh_mp,"off_roi" => $product->offline_roi, "on_india" => $product->online_india);
-				print_r ($pricearray);
-				echo $product->offindiamahamp;
+				$pricearray = array("off_mah_mp" => $product->offline_mh_mp,"off_roi" => $product->offline_roi, "on_india" => $product->online_india, "model" => $product->model);
 			}
 		}
 	}
