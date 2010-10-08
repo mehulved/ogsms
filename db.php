@@ -5,7 +5,7 @@ function query_db($manufacturer, $model) {
 	/* This function will take the manufacturer and model number and return the results after querying the database */
 	global $wpdb;
 	global $table_prefix;
-	$query = "SELECT product_id, post_id, model, offindia_mahamp, offindia_roi, onindia from " . $table_prefix. "og_products where model='$model'";
+	$query = "SELECT * from " . $table_prefix . "pricesearch where model='$model';";
 	$result = $wpdb->get_results($query);
 	return $result;
 }
@@ -50,11 +50,10 @@ function get_price($result, $manufacturer) {
 	/* go through the results and return the price of nearest or exact match */
 	if (sizeof($result) > 0) {
 		foreach ($result as $product) {
-			foreach (get_the_category($product->post_id) as $category) {
-				if (strtolower($category->cat_name) == strtolower($manufacturer)) {
-					$pricearray = array("off_mah_mp" => $product->offindia_mahamp,"off_roi" => $product->offindia_roi, "on_india" => $product->onindia);
-					echo $product->offindiamahamp;
-				}
+			if (strtolower($product->brand) == strtolower($manufacturer)) {
+				$pricearray = array("off_mah_mp" => $product->offline_mh_mp,"off_roi" => $product->offline_roi, "on_india" => $product->online_india);
+				print_r ($pricearray);
+				echo $product->offindiamahamp;
 			}
 		}
 	}

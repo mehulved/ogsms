@@ -10,16 +10,16 @@ We will convert the contents from string to array so we can separate each field 
 $content_array = explode(" ",$content); 
 $array_length = sizeof($content_array);
 
-if (($array_length<3)
+if ($array_length<3) {
 	$reply="You have sent a wrong command. Correct command is PRICE Manufacturer ModelNo. eg. PRICE Nokia E71";
 }
 else {
 	/* First argument is the manufacturer name and what follows is considered as the model number */
 	$manufacturer = $content_array[1]; 
 	$model = "";
-	for (i=2; i<=$array_length; i++) 
+	for ($i=2; $i<=$array_length; $i++) 
 	{
-		$model .= $content_array[i] . " ";
+		$model .= $content_array[$i] . " ";
 	}
 	$reply=db_reply($manufacturer,$model);
 }
