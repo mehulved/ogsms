@@ -21,6 +21,7 @@ else {
 	{
 		$model .= $content_array[$i] . " ";
 	}
+	$model=trim($model);
 	$reply=db_reply($manufacturer,$model);
 }
 
