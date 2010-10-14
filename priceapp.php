@@ -4,6 +4,17 @@ include 'db.php';
 
 $msisdn = $_GET["msisdn"]; //Sender's Phone Number
 $content = $_GET["content"]; // Content of the SMS
+
+/* 
+Log request to a file
+*/
+
+$fp = fopen('request.log', 'a') or die("Can't open file.");
+
+fwrite($fp, $msisdn . "\t");
+fwrite($fp, $content . "\n");
+
+fclose($fp);
 /* 
 We will convert the contents from string to array so we can separate each field and fetch it from the database
 */

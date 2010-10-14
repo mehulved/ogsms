@@ -5,7 +5,7 @@ function query_db($manufacturer, $model) {
 	/* This function will take the manufacturer and model number and return the results after querying the database */
 	global $wpdb;
 	global $table_prefix;
-	$query = "SELECT * from " . $table_prefix . "pricesearch where model='$model';";
+	$query = "SELECT * from " . $table_prefix . "pricesearch where model like '%$model%';";
 	$result = $wpdb->get_results($query);
 	return $result;
 }
